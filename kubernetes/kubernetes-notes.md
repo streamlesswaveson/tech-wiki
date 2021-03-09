@@ -101,6 +101,10 @@ kubectl delete deployment/httpenv service/httpenv
 
 # Deployments
 
+What is a deployment?
+* Wraps a pod
+* provides scaling, rolling updates
+
 
 ```
 kubectl create deployment httpenv --image=bretfisher/httpenv
@@ -153,6 +157,10 @@ kubectl get nodes
 
 # Pods
 
+What are pods? 
+* Contains one or more containers
+* atomic unit of scheduling
+
 Label pods
 ```
 kubectl label pods -l app=rng enabled=yes
@@ -172,6 +180,10 @@ kubectl get endpoints httpenv -o yaml
 
 
 # Services
+
+What is a Service?
+* Stable interface in front a Pods.  Name and IP does not change.
+* Name and IP get registered with the cluster's DNS service (CoreDNS)
 ```
 kubectl edit service rng
 kubectl get svc
@@ -256,6 +268,9 @@ kubectl get replicasets -w
 ```
 
 # Daemonsets
+
+What is a daemonset? 
+* Ensures that one and only one pod is deployed on a node.
 
 ```
 kubectl delete daemonset/rng
@@ -348,3 +363,36 @@ kubectl exec -ti $POD_NAME -- nginx -v\n
 kubectl port-forward $POD_NAME 8181:80
 ```
 
+# Networking Basics
+
+* All Nodes can talk to each other
+* All Pods can talk to each other without NAT (big flat network)
+* Every Pod gets its own IP address
+
+[![K8s Network](../images/k8s-network.png)](../images/k8s-network.png)
+
+
+[![K8s Network Service](../images/k8s-network-service.png)](../images/k8s-network-service.png)
+
+* Service may provide
+  * LoadBalancer
+    * Integrates with public cloud platform
+  * NodePort
+    * gets cluster-wide PORT
+    * also accessible from OUTSIDE the cluster
+  * ClusterIP (default)
+    * Gets own IP
+    * Only accessible from within cluster
+
+## NodePort
+[![K8s NodePort](../images/k8s-network-nodeport.png)](../images/k8s-network-nodeport.png)
+
+## Three Networks: Pod, Node, and Service 
+
+* Request for Service network routed through cbr0 and upstream to eth0.  
+* IPTABLES or IPVS rules apply and rewrite IP destination to a pod address
+* IPVS is the new default since K8s 1.11
+  * Native layer-4 load balancer
+  * uses linux kernel IP virtual server
+
+[![K8s Service Network](../images/k8s-network-service-network.png)](../images/k8s-network-service-network.png)
