@@ -45,6 +45,13 @@ gcloud compute instances list\ --filter="tags.items=kubernetes-the-hard-way"
 gcloud compute instances list --filter="tags.items=kubernetes-the-hard-way"
 ```
 
+# Kubernetes Clusters
+
+Adding context entry 
+``` 
+gcloud container clusters get-credentials your-cluster-name
+```
+
 ## Logging into instance
 ```
 gcloud compute ssh your-instance-name
