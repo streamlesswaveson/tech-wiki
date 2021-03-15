@@ -5,6 +5,12 @@ gcloud init
 gcloud version
 ```
 
+# Projects
+
+``` 
+gcloud projects list
+```
+
 # Config
 ```
 gcloud help config
@@ -12,6 +18,13 @@ gcloud config set compute/region us-west1
 gcloud config set compute/zone us-west1-c
 gcloud config
 gcloud config list
+gcloud config configurations list
+
+```
+
+Switch projects
+```
+gcloud config set project <project-name>
 ```
 
 # Networks
@@ -46,6 +59,28 @@ gcloud compute instances list --filter="tags.items=kubernetes-the-hard-way"
 ```
 
 # Kubernetes Clusters
+
+## Create a default cluster
+``` 
+gcloud container clusters create learnk8s-cluster
+```
+
+## Update cluster, add auto-scaling
+``` 
+gcloud container clusters update learnk8s-cluster \
+  --enable-autoscaling \
+  --node-pool default-pool \
+  --min-nodes 3 \
+  --max-nodes 5
+```
+
+## Delete a cluster
+
+## Other 
+``` 
+gcloud container clusters list
+gcloud container clusters describe learnk8s-cluster
+```
 
 Adding context entry 
 ``` 
@@ -112,6 +147,11 @@ gcloud compute forwarding-rules create kubernetes-forwarding-rule \
     --ports 6443 \
     --region $(gcloud config get-value compute/region) \
     --target-pool kubernetes-target-pool
+```
+
+# Cloud SQL
+``` 
+gcloud sql instances create <db-name> --tier=db-n1-standard-1 --region=us-central1
 ```
 
 

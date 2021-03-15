@@ -22,3 +22,4 @@ kubectl get pv
 
 
 # Persistant Volume Claim
+[![K8s PV and PVC](../images/k8s-pv-and-pvc.png)](../images/k8s-pv-and-pvc.png)

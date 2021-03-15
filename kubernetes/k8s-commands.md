@@ -108,6 +108,8 @@ kubectl apply -f web.yaml --dry-run --validate=false -o yaml
 kubectl apply -f web.yaml --dry-run=server --validate=false -o yaml
 ```
 
+## 
+
 Apply every file in a directory (way of decomposing multiple yaml files)
 ```
 kubectl apply -f .
@@ -286,6 +288,7 @@ replicaset.apps/dashboard-79c6957b6f   1         1         1       6d
 
 ```
 kubectl get replicasets -w
+kubectl get rs
 ```
 
 # Daemonsets
@@ -380,12 +383,14 @@ kubectl exec -ti $POD_NAME -- nginx -v\n
 
 Opening a bash shell
 ```
-kc exec -it $YOURPOD bash
+kubectl exec -it $YOURPOD bash
 ```
 
 
 # kubectl port-forward
 ```
 kubectl port-forward $POD_NAME 8181:80
+kubectl port-forward hello-kubernetes-7f65c7597f-7xmn8 8181:8080 --kubeconfig=kubeconfig-prod
+e.g. navigate to localhost:8181
 ```
 
